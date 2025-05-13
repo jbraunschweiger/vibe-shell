@@ -1,0 +1,16 @@
+{
+    "name": "web-game-starter",
+    "version": "0.0.1",
+    "scripts": {
+      "dev": "vite",
+      "build": "vite build",
+      "serve": "vite preview"
+    },
+    "dependencies": {
+      "three": "^0.150.0",
+      "@dimforge/rapier3d-compat": "^0.15.0"
+    },
+    "devDependencies": {
+      "vite": "^4.0.0"
+    }
+  }

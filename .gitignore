@@ -1,0 +1,17 @@
+# Node
+node_modules/
+dist/
+.vite/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# VSCode settings (optional, if shared settings not desired)
+.vscode/
