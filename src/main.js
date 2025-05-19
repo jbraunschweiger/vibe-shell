@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import RAPIER from '@dimforge/rapier3d-compat';
+import { createNoise2D } from 'simplex-noise';
 
 async function main() {
   // 1) Initialize Rapier (loads the WASM)  [oai_citation:2‡Rapier.pdf](file-service://file-SCg6aMsQydV3nGEkr1DMtT)
@@ -32,9 +33,20 @@ async function main() {
   world.createCollider(groundColliderDesc, groundBody);
 
   // Three.js ground mesh
+  const groundGeometry = new THREE.PlaneGeometry(20, 20, 100, 100);
+  const noise2D = createNoise2D();
+  const position = groundGeometry.attributes.position;
+  for (let i = 0; i < position.count; i++) {
+    const x = position.getX(i);
+    const y = position.getY(i);
+    // Use simplex noise to displace the y (height) value
+    const noise = noise2D(x * 0.15, y * 0.15);
+    position.setZ(i, noise * 2); // scale height as needed
+  }
+  groundGeometry.computeVertexNormals();
   const groundMesh = new THREE.Mesh(
-    new THREE.PlaneGeometry(20, 20),
-    new THREE.MeshStandardMaterial({ color: 0x777777 })
+    groundGeometry,
+    new THREE.MeshStandardMaterial({ color: 0x777777, wireframe: false })
   );
   groundMesh.rotation.x = -Math.PI / 2;
   groundMesh.receiveShadow = true;
